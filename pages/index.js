@@ -8,6 +8,7 @@ import {
 } from 'antd';
 import "../app.sass";
 import columns from '../config/user-column-config';
+import { userErrorMessages } from '../config/messages';
 
 class Home extends React.Component {
     
@@ -60,13 +61,13 @@ class Home extends React.Component {
                     <Form layout="vertical">
                         <Form.Item label="Name">
                         {getFieldDecorator('name', {
-                            rules: [{ required: true, message: 'Please enter name of the user' }],
+                            rules: [{ required: true, message: userErrorMessages.nameRequired }],
                         })(<Input />)}
                         </Form.Item>
                         <Form.Item label="Email">
                         {getFieldDecorator('email', {
-                            rules: [{ required: true, message: 'Please enter email of the user' },
-                                { type: 'email', message: 'The input is not valid E-mail!'}],
+                            rules: [{ required: true, message: userErrorMessages.emailRequired },
+                                { type: 'email', message: userErrorMessages.invalidEmail }],
                         })(<Input type="textarea" />)}
                         </Form.Item>
                     </Form>
