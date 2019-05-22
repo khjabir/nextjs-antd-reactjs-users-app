@@ -13,13 +13,15 @@ const columns = [
         title: 'Edit',
         dataIndex: 'edit',
         key: 'edit',
-        width: '12%'
+        width: '12%',
+      render: () => <a href="javascript:;">Edit</a>,
     },
     {
       title: 'Delete',
       dataIndex: 'delete',
       key: 'delete',
-      width: '12%'
+      width: '12%',
+      render: () => <a href="javascript:;">Delete</a>,
   }
   ];
 
