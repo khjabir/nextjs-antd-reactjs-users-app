@@ -65,7 +65,8 @@ class Home extends React.Component {
                         </Form.Item>
                         <Form.Item label="Email">
                         {getFieldDecorator('email', {
-                            rules: [{ required: true, message: 'Please enter email of the user' }],
+                            rules: [{ required: true, message: 'Please enter email of the user' },
+                                { type: 'email', message: 'The input is not valid E-mail!'}],
                         })(<Input type="textarea" />)}
                         </Form.Item>
                     </Form>
