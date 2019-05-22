@@ -5,20 +5,22 @@ const columns = [
       key: 'name',
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+        title: 'Edit',
+        dataIndex: 'edit',
+        key: 'edit',
+        width: '12%'
     },
     {
-        title: 'Actions',
-        dataIndex: 'actions',
-        key: 'actions',
-    },
+      title: 'Delete',
+      dataIndex: 'delete',
+      key: 'delete',
+      width: '12%'
+  }
   ];
 
 export default columns;

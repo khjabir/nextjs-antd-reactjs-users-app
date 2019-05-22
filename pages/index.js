@@ -1,62 +1,79 @@
-import { PageHeader, Button, Table, Modal } from 'antd';
+import { 
+    PageHeader, 
+    Button, 
+    Table, 
+    Modal,
+    Form,
+    Input 
+} from 'antd';
 import "../app.sass";
 import columns from '../config/user-column-config';
 
-const dataSource = [
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-    },
-    {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street',
-    },
-  ];
-
-export default class Home extends React.Component {
+class Home extends React.Component {
     
-    state = { visible: false };
+    state = { 
+        visible: false,
+        users: []
+    };
 
-    handleClick = () => {
-        this.toggleModal(true);
+    handleAddNewClick = () => {
+        this.toggleModal();
     }
 
-    handleModalOk = () => {
-        this.toggleModal(false);
+    handleModalOk = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+        if (!err) {
+            values.Id = this.state.length + 1;
+            this.setState({ users: [...this.state.users, values]});
+            this.props.form.resetFields();
+            this.toggleModal();
+        }
+        });
     }
 
     handleModalCancel = () => {
-        this.toggleModal(false);
+        this.toggleModal();
     }
 
-    toggleModal(flag) {
+    toggleModal() {
         this.setState({
-            visible: flag,
+            visible: !this.state.visible,
           });
     }
 
     render() {
+        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         return (
             <div>
                 <PageHeader className="header">Users</PageHeader>
                 <div className="addNewBtnContainer">
-                    <Button className="addNewBtn" onClick={this.handleClick}>Add User</Button>
+                    <Button className="addNewBtn" onClick={this.handleAddNewClick}>Add User</Button>
                 </div>
-                <Table dataSource={dataSource} columns={columns} />;
+                <Table dataSource={this.state.users} columns={columns} />;
                 <Modal
-                  title="Basic Modal"
+                  title="Add User"
                   visible={this.state.visible}
                   onOk={this.handleModalOk}
                   onCancel={this.handleModalCancel}
                 >
-                    <input />
-                    <input />
+                    <Form layout="vertical">
+                        <Form.Item label="Name">
+                        {getFieldDecorator('name', {
+                            rules: [{ required: true, message: 'Please enter name of the user' }],
+                        })(<Input />)}
+                        </Form.Item>
+                        <Form.Item label="Email">
+                        {getFieldDecorator('email', {
+                            rules: [{ required: true, message: 'Please enter email of the user' }],
+                        })(<Input type="textarea" />)}
+                        </Form.Item>
+                    </Form>
                 </Modal>
             </div>
         );
     }
 }
+
+const WrappedUserForm = Form.create({ name: 'user_form' })(Home);
+export default WrappedUserForm;
