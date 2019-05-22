@@ -51,7 +51,9 @@ class Home extends React.Component {
                 <div className="addNewBtnContainer">
                     <Button className="addNewBtn" onClick={this.handleAddNewClick}>Add User</Button>
                 </div>
-                <Table dataSource={this.state.users} columns={columns} />;
+                <div className="tableContainer">
+                    <Table dataSource={this.state.users} columns={columns} />;
+                </div>
                 <Modal
                   title="Add User"
                   visible={this.state.visible}
