@@ -23,12 +23,12 @@ class Home extends React.Component {
     handleModalOk = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-        if (!err) {
-            values.Id = this.state.length + 1;
-            this.setState({ users: [...this.state.users, values]});
-            this.props.form.resetFields();
-            this.toggleModal();
-        }
+            if (!err) {
+                values.Id = this.state.users.length + 1;
+                this.setState({ users: [...this.state.users, values]});
+                this.props.form.resetFields();
+                this.toggleModal();
+            }
         });
     }
 
