@@ -49,6 +49,7 @@ class Home extends React.Component {
             <div>
                 <PageHeader className="header">Users</PageHeader>
                 <div className="addNewBtnContainer">
+                    <span className="tableCountInfo">{this.state.users.length} User{this.state.users.length !== 1 ? 's' : null}</span>
                     <Button className="addNewBtn" onClick={this.handleAddNewClick}>Add User</Button>
                 </div>
                 <div className="tableContainer">
