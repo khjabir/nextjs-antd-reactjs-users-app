@@ -5,7 +5,8 @@ import {
     Modal,
     Form,
     Input,
-    Icon
+    Icon,
+    notification 
 } from 'antd';
 import "../app.sass";
 import { userErrorMessages } from '../config/messages';
@@ -15,7 +16,8 @@ class Home extends React.Component {
     state = { 
         visible: false,
         users: [],
-        currentUser: null
+        currentUser: null,
+        confirmVisible: false
     };
 
     handleAddNewClick = () => {
@@ -39,6 +41,7 @@ class Home extends React.Component {
     addUser(values) {
         values.Id = this.state.users.length + 1;
         this.setState({ users: [...this.state.users, values]});
+        this.showUserSuccessToast('added')
     }
 
     editUser(values) {
@@ -46,6 +49,7 @@ class Home extends React.Component {
         var users = this.state.users;
         users[currentUserIndex] = { ...values, Id: this.state.currentUser};
         this.setState({users, currentUser: null});
+        this.showUserSuccessToast('edited')
     }
 
     handleModalCancel = () => {
@@ -61,10 +65,11 @@ class Home extends React.Component {
         });
     }
 
-    onDelete = (userId, e) => {
-        e.preventDefault();
-        const users = this.state.users.filter(user => user.Id !== userId);
-        this.setState({ users });
+    onDelete = () => {
+        const users = this.state.users.filter(user => user.Id !== this.state.currentUser);
+        this.setState({ users, currentUser: null });
+        this.toggleConfirmModal();
+        this.showUserSuccessToast('deleted')
     }
 
     onEdit = (userId, e) => {
@@ -76,6 +81,21 @@ class Home extends React.Component {
         });
         this.setState({currentUser: user.Id});
         this.toggleModal();
+    }
+
+    toggleConfirmModal = (userId) => {
+        this.setState({
+            confirmVisible: !this.state.confirmVisible,
+            currentUser: userId
+        });
+    }
+
+    showUserSuccessToast(msg) {
+        notification.success({
+            message: 'Success',
+            description: `User ${msg} successfully.`,
+            duration: 3
+        });
     }
 
 
@@ -109,7 +129,9 @@ class Home extends React.Component {
               key: 'delete',
               width: '12%',
               render: (text, record) => (
-                <span className="actionIcon" onClick={(e) => { this.onDelete(record.Id, e); }}>
+                <span className="actionIcon" onClick={(e) => { 
+                    this.toggleConfirmModal(record.Id); 
+                    }}>
                     <Icon type="delete" />
                 </span>
               ),
@@ -149,6 +171,16 @@ class Home extends React.Component {
                         })(<Input type="textarea" />)}
                         </Form.Item>
                     </Form>
+                </Modal>
+                <Modal
+                    title="Delete"
+                    visible={this.state.confirmVisible}
+                    onOk={this.onDelete}
+                    onCancel={this.toggleConfirmModal}
+                    okText="OK"
+                    cancelText="Cancel"
+                    >
+                    <p>Are you sure you want to delete the user?</p>
                 </Modal>
             </div>
         );
