@@ -4,7 +4,8 @@ import {
     Table, 
     Modal,
     Form,
-    Input 
+    Input,
+    Icon
 } from 'antd';
 import "../app.sass";
 import { userErrorMessages } from '../config/messages';
@@ -97,8 +98,8 @@ class Home extends React.Component {
                 key: 'edit',
                 width: '12%',
                 render: (text, record) => (
-                    <span className="editIcon" onClick={(e) => { this.onEdit(record.Id, e); }}>
-                      Edit
+                    <span className="actionIcon" onClick={(e) => { this.onEdit(record.Id, e); }}>
+                        <Icon type="edit" />
                     </span>
                   ),
             },
@@ -108,8 +109,8 @@ class Home extends React.Component {
               key: 'delete',
               width: '12%',
               render: (text, record) => (
-                <span className="" onClick={(e) => { this.onDelete(record.Id, e); }}>
-                  Delete
+                <span className="actionIcon" onClick={(e) => { this.onDelete(record.Id, e); }}>
+                    <Icon type="delete" />
                 </span>
               ),
             }
