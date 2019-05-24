@@ -94,13 +94,16 @@ class Home extends React.Component {
         notification.success({
             message: 'Success',
             description: `User ${msg} successfully.`,
-            duration: 3
+            duration: 3,
+            onClick: () => {
+                notification.destroy();
+            },
         });
     }
 
 
     render() {
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const { getFieldDecorator } = this.props.form;
         const columns = [
             {
               title: 'Name',
@@ -129,9 +132,7 @@ class Home extends React.Component {
               key: 'delete',
               width: '12%',
               render: (text, record) => (
-                <span className="actionIcon" onClick={(e) => { 
-                    this.toggleConfirmModal(record.Id); 
-                    }}>
+                <span className="actionIcon" onClick={(e) => { this.toggleConfirmModal(record.Id); }}>
                     <Icon type="delete" />
                 </span>
               ),
