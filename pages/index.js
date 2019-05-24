@@ -49,7 +49,7 @@ class Home extends React.Component {
         var users = this.state.users;
         users[currentUserIndex] = { ...values, Id: this.state.currentUser};
         this.setState({users, currentUser: null});
-        this.showUserSuccessToast('edited')
+        this.showUserSuccessToast('updated')
     }
 
     handleModalCancel = () => {
