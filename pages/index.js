@@ -17,7 +17,8 @@ class Home extends React.Component {
         visible: false,
         users: [],
         currentUser: null,
-        confirmVisible: false
+        confirmVisible: false,
+        insertId: 0
     };
 
     handleAddNewClick = () => {
@@ -39,9 +40,9 @@ class Home extends React.Component {
     }
 
     addUser(values) {
-        values.Id = this.state.users.length + 1;
-        this.setState({ users: [...this.state.users, values]});
-        this.showUserSuccessToast('added')
+        values.Id = this.state.insertId + 1;
+        this.setState({ users: [...this.state.users, values], insertId: values.Id});
+        this.showUserSuccessToast('added');
     }
 
     editUser(values) {
@@ -49,7 +50,7 @@ class Home extends React.Component {
         var users = this.state.users;
         users[currentUserIndex] = { ...values, Id: this.state.currentUser};
         this.setState({users, currentUser: null});
-        this.showUserSuccessToast('updated')
+        this.showUserSuccessToast('updated');
     }
 
     handleModalCancel = () => {
@@ -69,7 +70,7 @@ class Home extends React.Component {
         const users = this.state.users.filter(user => user.Id !== this.state.currentUser);
         this.setState({ users, currentUser: null });
         this.toggleConfirmModal();
-        this.showUserSuccessToast('deleted')
+        this.showUserSuccessToast('deleted');
     }
 
     onEdit = (userId, e) => {
